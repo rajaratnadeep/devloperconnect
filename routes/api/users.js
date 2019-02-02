@@ -98,15 +98,13 @@ router.post("/login", (req, res) => {
           id: user.id,
           name: user.name,
           avatar: user.avatar
-        }; //Create JWT payload
+        }; //Create JWT payload- keep whatever date req from db
 
         //Sign the token
         jwt.sign(
           payload,
           keys.secretOrKey,
-          {
-            expiresIn: 3600
-          },
+          { expiresIn: 3600 },
           (err, token) => {
             res.json({
               success: true,
@@ -127,9 +125,7 @@ router.post("/login", (req, res) => {
 // @access  Private
 router.get(
   "/current",
-  passport.authenticate("jwt", {
-    session: false
-  }),
+  passport.authenticate("jwt", { session: false }),
   (req, res) => {
     res.json({
       id: req.user.id,
